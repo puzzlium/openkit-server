@@ -20,7 +20,8 @@ class Leaderboard < ActiveRecord::Base
       :icon_url => PaperclipHelper.uri_for(icon, base_uri),
       :player_count => player_count(sandbox),
       :gamecenter_id => gamecenter_id,
-      :gpg_id => gpg_id
+      :gpg_id => gpg_id,
+      :tag_list => tag_list
     }
   end
 
