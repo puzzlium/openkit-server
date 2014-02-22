@@ -58,6 +58,17 @@ class ScoresApiTest < ActionDispatch::IntegrationTest
     assert_equal 4, user_1_best
   end
 
+  test "best scores for multiple leaderboards" do
+    submit_values(@user1, @low_value_leaderboard, [5, 4, 9, 20, 9])
+    submit_values(@user1, @high_value_leaderboard, [105, 104, 109, 120, 109])
+    leaderboard_ids = [@low_value_leaderboard.id, @high_value_leaderboard.id]
+    joined_leaderboard_ids = leaderboard_ids.join(",")
+    Rails.logger.info "joined ids: " + joined_leaderboard_ids
+    get "/best_scores/user/multiple?leaderboard_id=#{joined_leaderboard_ids}&user_id=#{@user1.id}"
+    user_1_bests = JSON.parse(response.body).collect{|score| score['value']}
+    assert_equal [4, 120].to_set, user_1_bests.to_set
+  end
+
 
   test "best scores can return empty array" do
     get "/best_scores?leaderboard_id=#{@high_value_leaderboard.id}"

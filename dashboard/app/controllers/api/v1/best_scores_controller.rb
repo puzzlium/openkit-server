@@ -18,6 +18,16 @@ class BestScoresController < ApplicationController
     ActiveRecord::Associations::Preloader.new(@score, [:user]).run
     render json: @score
   end
+  
+  def user_multiple
+    @scores = []
+    @leaderboards.each do |leaderboard|
+      score = score_class.best_1_0(leaderboard.id, params[:user_id])
+      ActiveRecord::Associations::Preloader.new(score, [:user]).run
+      @scores << score
+    end
+    render json: @scores
+  end
 
   def social
     @scores = params[:fb_friends] && score_class.social(authorized_app, @leaderboard, params[:fb_friends]) || []
@@ -26,7 +36,12 @@ class BestScoresController < ApplicationController
 
   private
   def set_leaderboard
-    @leaderboard = authorized_app.leaderboards.find_by_id(params.delete(:leaderboard_id))
+    leaderboard_ids = params.delete(:leaderboard_id)
+    if leaderboard_ids.is_a? String
+      leaderboard_ids = leaderboard_ids.split(",")
+    end
+    @leaderboards = authorized_app.leaderboards.where(id: leaderboard_ids).to_a
+    @leaderboard = @leaderboards.first
     unless @leaderboard
       render status: :forbidden, json: {message: "Pass a leaderboard_id that belongs to the app associated with app_key"}
     end
