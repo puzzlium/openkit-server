@@ -23,8 +23,10 @@ class BestScoresController < ApplicationController
     @scores = []
     @leaderboards.each do |leaderboard|
       score = score_class.best_1_0(leaderboard.id, params[:user_id])
-      ActiveRecord::Associations::Preloader.new(score, [:user]).run
-      @scores << score
+      if score
+        ActiveRecord::Associations::Preloader.new(score, [:user]).run
+        @scores << score
+      end
     end
     render json: @scores
   end
