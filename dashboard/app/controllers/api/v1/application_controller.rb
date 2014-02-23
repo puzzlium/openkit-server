@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
   
   def in_sandbox?
-    !!request.subdomain.match(/^(?:beta-)?sandbox$/)
+    !!request.subdomain.match(/^(?:beta-)?sandbox/)
   end
   
 end
