@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131212071708) do
+ActiveRecord::Schema.define(version: 20140312132028) do
 
   create_table "achievement_scores", force: true do |t|
     t.integer  "user_id"
@@ -162,12 +162,12 @@ ActiveRecord::Schema.define(version: 20131212071708) do
   end
 
   create_table "sandbox_scores", force: true do |t|
-    t.integer  "sort_value",            limit: 8, null: false
+    t.integer  "sort_value",            limit: 8,    null: false
     t.integer  "user_id"
     t.integer  "leaderboard_id"
-    t.datetime "created_at",                      null: false
+    t.datetime "created_at",                         null: false
     t.string   "display_string"
-    t.integer  "metadata"
+    t.binary   "metadata",              limit: 1024
     t.string   "meta_doc_file_name"
     t.string   "meta_doc_content_type"
     t.integer  "meta_doc_file_size"
@@ -187,12 +187,12 @@ ActiveRecord::Schema.define(version: 20131212071708) do
   add_index "sandbox_tokens", ["user_id", "app_id"], name: "index_sandbox_tokens_on_user_id_and_app_id", using: :btree
 
   create_table "scores", force: true do |t|
-    t.integer  "sort_value",            limit: 8, null: false
+    t.integer  "sort_value",            limit: 8,    null: false
     t.integer  "user_id"
     t.integer  "leaderboard_id"
     t.datetime "created_at"
     t.string   "display_string"
-    t.integer  "metadata"
+    t.binary   "metadata",              limit: 1024
     t.string   "meta_doc_file_name"
     t.string   "meta_doc_content_type"
     t.integer  "meta_doc_file_size"
