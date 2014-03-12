@@ -16,6 +16,7 @@ OKDashboard::Application.routes.draw do
       post 'client_sessions',           to: 'client_sessions#create'
       get 'best_scores',                to: 'best_scores#index'
       get 'best_scores/user',           to: 'best_scores#user'
+      get 'best_scores/user/multiple',  to: 'best_scores#user_multiple'
       post 'best_scores/social',        to: 'best_scores#social'
       delete '/purge_test_data',        to: 'apps#purge_test_data'
     end

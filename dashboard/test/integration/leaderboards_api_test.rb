@@ -43,6 +43,18 @@ class LeaderboardsApiTest < ActionDispatch::IntegrationTest
     assert_equal leaderboard.id, list[0]['id']
   end
 
+  def test_tag_list_is_included
+    leaderboard = create_leaderboard_for(@game)
+    leaderboard.tag_list << 'v2'
+    leaderboard.tag_list << 'some_tag'
+    leaderboard.save
+
+    get '/leaderboards?tag=v2'
+    list = JSON.parse(response.body)
+    assert_equal 1, list.count
+    assert_equal ['v2', 'some_tag'].to_set, list[0]['tag_list'].to_set
+  end
+
 
   def test_show
     leaderboard = create_leaderboard_for(@game)

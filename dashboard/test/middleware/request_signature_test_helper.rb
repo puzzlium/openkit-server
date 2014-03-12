@@ -1,3 +1,5 @@
+require 'cgi'
+
 module RequestSignatureTestHelper
 
   def self.included(base)
@@ -12,7 +14,9 @@ module RequestSignatureTestHelper
   def rack_auth_for_get(path)
     uri = URI(path)
     query_params = uri.query && Rack::Utils.parse_query(uri.query) || {}
-    r = OpenKit::Request::Get.new(path, query_params)
+    escaped_query_params = {}
+    query_params.each { |k, v| escaped_query_params[k] = CGI.escape(v) }
+    r = OpenKit::Request::Get.new(path, escaped_query_params)
     rack_auth_header(r.net_request)
   end
 
