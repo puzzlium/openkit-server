@@ -2,7 +2,7 @@
 # user.apps
 # user.developer
 class User < ActiveRecord::Base
-  attr_accessible :nick, :fb_id, :twitter_id, :google_id, :custom_id, :gamecenter_id
+  attr_accessible :nick, :fb_id, :twitter_id, :google_id, :custom_id, :gamecenter_id, :profile_picture_url
   attr_accessor :cloud_data
   validates_presence_of :nick
   validate :has_service_id
