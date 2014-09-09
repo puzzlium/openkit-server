@@ -23,6 +23,7 @@ gem 'unf',          '~>0.1'
 gem 'mustache',     '~>0.99'
 gem 'highline'
 gem 'colorize'
+gem 'nokogiri', '~> 1.6.3.1'
 
 group :development do
   gem 'thin'
