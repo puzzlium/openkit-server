@@ -1,7 +1,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: leaderboard_dev
+  database: openkit_dev
   username: root
   password: 
   host: localhost
@@ -15,7 +15,7 @@ development:
 test:
   adapter: mysql2
   encoding: utf8
-  database: leaderboard_test 
+  database: openkit_test 
   host: 127.0.0.1 
   port: 3306
 
