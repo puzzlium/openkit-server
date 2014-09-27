@@ -61,7 +61,7 @@ module BaseScore
         if ENABLE_USER_RANK && !skip_rank
           rank_cond = ["leaderboard_id = ? AND sort_value > ?", leaderboard_id, best_score.sort_value]
           sanitized_rank_cond = ActiveRecord::Base.send(:sanitize_sql_array, rank_cond)
-          best_score.rank = connection.execute("select count(*) from (select * from #{table_name} where #{sanitized_rank_cond} group by user_id) t").first[0] + 1
+          best_score.rank = connection.execute("select count(*) from (select user_id from #{table_name} where #{sanitized_rank_cond} group by user_id) t").first[0] + 1
         end
       end
       best_score
@@ -119,7 +119,7 @@ module BaseScore
           rank_cond[0] << " AND sort_value > ?"
           rank_cond << best_score.sort_value
           sanitized_rank_cond = ActiveRecord::Base.send(:sanitize_sql_array, rank_cond)
-          best_score.rank = connection.execute("select count(*) from (select * from #{table_name} where #{sanitized_rank_cond} group by user_id) t").first[0] + 1
+          best_score.rank = connection.execute("select count(*) from (select user_id from #{table_name} where #{sanitized_rank_cond} group by user_id) t").first[0] + 1
         end
       end
 
