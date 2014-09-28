@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409091508) do
+ActiveRecord::Schema.define(version: 20140927093858) do
 
   create_table "achievement_scores", force: true do |t|
     t.integer  "user_id"
@@ -260,6 +260,8 @@ ActiveRecord::Schema.define(version: 20140409091508) do
     t.string   "google_id",           limit: 40
     t.string   "gamecenter_id",       limit: 40
     t.string   "profile_picture_url", limit: 1024
+    t.string   "countryCode"
+    t.string   "region"
   end
 
   add_index "users", ["custom_id"], name: "index_users_on_custom_id", using: :btree
