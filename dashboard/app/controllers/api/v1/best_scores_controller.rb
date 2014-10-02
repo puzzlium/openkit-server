@@ -8,9 +8,14 @@ class BestScoresController < ApplicationController
   def index
     x = params.delete(:page_num)
     y = params.delete(:num_per_page)
-    @scores = score_class.bests_1_0(@leaderboard.id, {page_num: x, num_per_page: y})
-    ActiveRecord::Associations::Preloader.new(@scores, [:user]).run
-    render json: @scores
+    country = params.delete(:countrycode)	
+    if (country.blank?) 	
+    	@scores = score_class.bests_1_0(@leaderboard.id, {page_num: x, num_per_page: y})
+	else 
+		@scores = score_class.bests_1_0_country(@leaderboard.id, country, {page_num: x, num_per_page: y})		
+	end
+	ActiveRecord::Associations::Preloader.new(@scores, [:user]).run
+	render json: @scores
   end
 
   def user
@@ -31,6 +36,18 @@ class BestScoresController < ApplicationController
     render json: @scores
   end
 
+  def user_multiple_country
+    @scores = []
+    @leaderboards.each do |leaderboard|
+	  score = score_class.best_1_0c(leaderboard.id, params[:user_id], params[:countrycode])
+      if score
+        ActiveRecord::Associations::Preloader.new(score, [:user]).run
+        @scores << score
+      end
+    end
+    render json: @scores
+  end
+  
   def social
     @scores = params[:fb_friends] && score_class.social(authorized_app, @leaderboard, params[:fb_friends]) || []
     render json: @scores

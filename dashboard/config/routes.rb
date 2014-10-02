@@ -17,6 +17,7 @@ OKDashboard::Application.routes.draw do
       get 'best_scores',                to: 'best_scores#index'
       get 'best_scores/user',           to: 'best_scores#user'
       get 'best_scores/user/multiple',  to: 'best_scores#user_multiple'
+	  get 'best_scores/user/multiplecountry', to: 'best_scores#user_multiple_country'
       post 'best_scores/social',        to: 'best_scores#social'
       delete '/purge_test_data',        to: 'apps#purge_test_data'
     end
